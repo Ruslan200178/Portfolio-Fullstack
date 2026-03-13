@@ -6,12 +6,14 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+        public $withinTransaction = false;
+
     /**
      * Run the migrations.
      *
      * @return void
      */
-      public $withinTransaction = false;
+  
     public function up()
     {
         Schema::create('failed_jobs', function (Blueprint $table) {

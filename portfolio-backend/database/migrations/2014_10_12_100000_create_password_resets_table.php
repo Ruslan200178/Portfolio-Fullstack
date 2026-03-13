@@ -6,12 +6,13 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    public $withinTransaction = false;
     /**
      * Run the migrations.
      *
      * @return void
      */
-     
+   
     public function up()
     {
         Schema::create('password_resets', function (Blueprint $table) {
