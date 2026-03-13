@@ -11,6 +11,7 @@ return new class extends Migration
      *
      * @return void
      */
+      public $withinTransaction = false;
     public function up()
     {
         Schema::create('failed_jobs', function (Blueprint $table) {
