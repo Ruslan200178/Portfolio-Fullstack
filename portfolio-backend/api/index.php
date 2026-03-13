@@ -5,6 +5,11 @@ error_reporting(E_ALL);
 $appPath = '/var/task/user';
 $tmpPath = '/tmp/laravel';
 
+// Set env vars BEFORE anything loads
+putenv('VIEW_COMPILED_PATH=' . $tmpPath . '/storage/framework/views');
+putenv('SESSION_DRIVER=array');
+putenv('CACHE_DRIVER=array');
+
 $dirs = [
     $tmpPath . '/storage/logs',
     $tmpPath . '/storage/framework/cache/data',
@@ -34,13 +39,11 @@ $app->instance('path.bootstrap', $tmpPath . '/bootstrap');
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 $request = Illuminate\Http\Request::capture();
 
-ob_start();
 try {
     $response = $kernel->handle($request);
     $response->send();
     $kernel->terminate($request, $response);
 } catch(\Throwable $e) {
-    ob_end_clean();
     http_response_code(500);
     echo json_encode([
         'error' => $e->getMessage(),
@@ -48,4 +51,3 @@ try {
         'line' => $e->getLine()
     ]);
 }
-ob_end_flush();
