@@ -1,19 +1,15 @@
 <?php
 
-// CORS Headers
-$origin = $_SERVER['HTTP_ORIGIN'] ?? '*';
-header('Access-Control-Allow-Origin: ' . $origin);
+// CORS Headers - must be set before anything else
+header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With, Accept');
-header('Access-Control-Allow-Credentials: false');
+header('Access-Control-Max-Age: 86400');
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit();
 }
-
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
 
 $appPath = '/var/task/user';
 $tmpPath = '/tmp/laravel';
@@ -51,13 +47,15 @@ $request = Illuminate\Http\Request::capture();
 
 try {
     $response = $kernel->handle($request);
+    
+    // Force CORS headers on response
+    $response->headers->set('Access-Control-Allow-Origin', '*');
+    $response->headers->set('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+    $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept');
+    
     $response->send();
     $kernel->terminate($request, $response);
 } catch(\Throwable $e) {
     http_response_code(500);
-    echo json_encode([
-        'error' => $e->getMessage(),
-        'file' => $e->getFile(),
-        'line' => $e->getLine()
-    ]);
+    echo json_encode(['error' => $e->getMessage()]);
 }
