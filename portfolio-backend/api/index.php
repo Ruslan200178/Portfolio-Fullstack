@@ -5,7 +5,6 @@ error_reporting(E_ALL);
 $appPath = '/var/task/user';
 $tmpPath = '/tmp/laravel';
 
-// Create writable directories in /tmp
 $dirs = [
     $tmpPath . '/storage/logs',
     $tmpPath . '/storage/framework/cache/data',
@@ -20,10 +19,8 @@ foreach ($dirs as $dir) {
     }
 }
 
-// Copy bootstrap cache to /tmp
 foreach (glob($appPath . '/bootstrap/cache/*.php') as $file) {
-    $dest = $tmpPath . '/bootstrap/cache/' . basename($file);
-    copy($file, $dest);
+    copy($file, $tmpPath . '/bootstrap/cache/' . basename($file));
 }
 
 require $appPath . '/vendor/autoload.php';
@@ -31,11 +28,9 @@ require $appPath . '/vendor/autoload.php';
 define('LARAVEL_START', microtime(true));
 
 $app = require_once $appPath . '/bootstrap/app.php';
-
 $app->useStoragePath($tmpPath . '/storage');
 $app->instance('path.storage', $tmpPath . '/storage');
 $app->instance('path.bootstrap', $tmpPath . '/bootstrap');
-$app->instance('path.log', $tmpPath . '/storage/logs');
 
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 $request = Illuminate\Http\Request::capture();
@@ -49,3 +44,11 @@ try {
     echo "<br>File: " . $e->getFile();
     echo "<br>Line: " . $e->getLine();
 }
+```
+
+---
+
+## Step 3 — Update .env locally
+Open `C:\xampp\htdocs\portfolio-backend\.env` and change:
+```
+LOG_CHANNEL=stderr
