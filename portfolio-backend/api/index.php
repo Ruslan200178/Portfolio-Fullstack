@@ -5,6 +5,7 @@ error_reporting(E_ALL);
 $appPath = '/var/task/user';
 $tmpPath = '/tmp/laravel';
 
+// Create writable directories
 $dirs = [
     $tmpPath . '/storage/logs',
     $tmpPath . '/storage/framework/cache/data',
@@ -19,9 +20,22 @@ foreach ($dirs as $dir) {
     }
 }
 
+// Copy bootstrap cache to /tmp
+foreach (glob($appPath . '/bootstrap/cache/*.php') as $file) {
+    $dest = $tmpPath . '/bootstrap/cache/' . basename($file);
+    copy($file, $dest);
+}
+
 require $appPath . '/vendor/autoload.php';
+
+// Override bootstrap path before app loads
+define('LARAVEL_START', microtime(true));
+
 $app = require_once $appPath . '/bootstrap/app.php';
 $app->useStoragePath($tmpPath . '/storage');
+
+// Bind bootstrap path to tmp
+$app->instance('path.bootstrap', $tmpPath . '/bootstrap');
 
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 $request = Illuminate\Http\Request::capture();
