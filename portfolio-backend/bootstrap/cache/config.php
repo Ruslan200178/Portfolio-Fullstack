@@ -4,7 +4,7 @@
     'name' => 'Portfolio',
     'env' => 'production',
     'debug' => false,
-    'url' => 'https://portfolio-fullstack-lake.vercel.app',
+    'url' => 'https://portfolio-fullstack-sigma.vercel.app',
     'asset_url' => NULL,
     'timezone' => 'UTC',
     'locale' => 'en',
@@ -379,7 +379,7 @@
       array (
         'driver' => 'local',
         'root' => 'C:\\xampp\\htdocs\\portfolio-backend\\storage\\app/public',
-        'url' => 'https://portfolio-fullstack-lake.vercel.app/storage',
+        'url' => 'https://portfolio-fullstack-sigma.vercel.app/storage',
         'visibility' => 'public',
         'throw' => false,
       ),
@@ -417,7 +417,7 @@
   ),
   'logging' => 
   array (
-    'default' => 'stack',
+    'default' => 'stderr',
     'deprecations' => 
     array (
       'channel' => 'null',
@@ -626,7 +626,7 @@
       3 => '127.0.0.1',
       4 => '127.0.0.1:8000',
       5 => '::1',
-      6 => 'portfolio-fullstack-lake.vercel.app',
+      6 => 'portfolio-fullstack-sigma.vercel.app',
     ),
     'guard' => 
     array (
