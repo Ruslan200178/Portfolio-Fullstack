@@ -22,7 +22,6 @@ foreach ($dirs as $dir) {
     }
 }
 
-// Copy bootstrap cache to /tmp
 foreach (glob($appPath . '/bootstrap/cache/*.php') as $file) {
     copy($file, $tmpPath . '/bootstrap/cache/' . basename($file));
 }
