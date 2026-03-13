@@ -30,25 +30,12 @@ require $appPath . '/vendor/autoload.php';
 
 define('LARAVEL_START', microtime(true));
 
-// Set storage path BEFORE app loads
-putenv('APP_STORAGE_PATH=' . $tmpPath . '/storage');
-
 $app = require_once $appPath . '/bootstrap/app.php';
 
-// Override storage path immediately
 $app->useStoragePath($tmpPath . '/storage');
 $app->instance('path.storage', $tmpPath . '/storage');
 $app->instance('path.bootstrap', $tmpPath . '/bootstrap');
-
-// Bind log path
-$app->configureMonologUsing(function($monolog) use ($tmpPath) {
-    $monolog->pushHandler(
-        new \Monolog\Handler\StreamHandler(
-            $tmpPath . '/storage/logs/laravel.log',
-            \Monolog\Logger::DEBUG
-        )
-    );
-});
+$app->instance('path.log', $tmpPath . '/storage/logs');
 
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 $request = Illuminate\Http\Request::capture();
