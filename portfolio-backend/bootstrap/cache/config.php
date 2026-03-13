@@ -427,12 +427,9 @@
     array (
       'stack' => 
       array (
-        'driver' => 'stack',
-        'channels' => 
-        array (
-          0 => 'single',
-        ),
-        'ignore_exceptions' => false,
+        'driver' => 'single',
+        'path' => 'C:\\xampp\\htdocs\\portfolio-backend\\storage\\logs/laravel.log',
+        'level' => 'error',
       ),
       'single' => 
       array (
