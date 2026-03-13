@@ -1,4 +1,5 @@
 <?php
+
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
@@ -19,6 +20,11 @@ foreach ($dirs as $dir) {
     if (!is_dir($dir)) {
         mkdir($dir, 0775, true);
     }
+}
+
+// Copy bootstrap cache to /tmp
+foreach (glob($appPath . '/bootstrap/cache/*.php') as $file) {
+    copy($file, $tmpPath . '/bootstrap/cache/' . basename($file));
 }
 
 require $appPath . '/vendor/autoload.php';
