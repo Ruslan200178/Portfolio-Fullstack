@@ -688,7 +688,7 @@
     array (
       0 => 'C:\\xampp\\htdocs\\portfolio-backend\\resources\\views',
     ),
-    'compiled' => 'C:\\xampp\\htdocs\\portfolio-backend\\storage\\framework\\views',
+    'compiled' => '/tmp/laravel/storage/framework/views',
   ),
   'flare' => 
   array (
