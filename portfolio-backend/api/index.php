@@ -5,10 +5,7 @@ error_reporting(E_ALL);
 $appPath = '/var/task/user';
 $tmpPath = '/tmp/laravel';
 
-// Set env vars BEFORE anything loads
 putenv('VIEW_COMPILED_PATH=' . $tmpPath . '/storage/framework/views');
-putenv('SESSION_DRIVER=array');
-putenv('CACHE_DRIVER=array');
 
 $dirs = [
     $tmpPath . '/storage/logs',
@@ -22,10 +19,6 @@ foreach ($dirs as $dir) {
     if (!is_dir($dir)) {
         mkdir($dir, 0775, true);
     }
-}
-
-foreach (glob($appPath . '/bootstrap/cache/*.php') as $file) {
-    copy($file, $tmpPath . '/bootstrap/cache/' . basename($file));
 }
 
 require $appPath . '/vendor/autoload.php';
