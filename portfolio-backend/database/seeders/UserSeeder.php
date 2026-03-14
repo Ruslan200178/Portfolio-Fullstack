@@ -12,9 +12,9 @@ class UserSeeder extends Seeder
     {
         DB::statement("
             INSERT INTO users (name, email, password, is_admin, created_at, updated_at)
-            VALUES 
-            ('Admin', 'admin@portfolio.com', '" . Hash::make('password123') . "', TRUE, NOW(), NOW()),
-            ('Test User', 'test@portfolio.com', '" . Hash::make('password123') . "', FALSE, NOW(), NOW())
+            VALUES
+            ('Admin', 'admin@portfolio.com', '" . Hash::make('password123') . "', 1, NOW(), NOW()),
+            ('Test User', 'test@portfolio.com', '" . Hash::make('password123') . "', 0, NOW(), NOW())
             ON CONFLICT (email) DO NOTHING
         ");
     }
