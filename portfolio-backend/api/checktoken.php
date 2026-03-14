@@ -21,14 +21,20 @@ foreach (glob($appPath . '/bootstrap/cache/*.php') as $file) {
 putenv('VIEW_COMPILED_PATH=' . $tmpPath . '/storage/framework/views');
 
 require $appPath . '/vendor/autoload.php';
+define('LARAVEL_START', microtime(true));
+
 $app = require_once $appPath . '/bootstrap/app.php';
 $app->useStoragePath($tmpPath . '/storage');
 $app->instance('path.storage', $tmpPath . '/storage');
 $app->instance('path.bootstrap', $tmpPath . '/bootstrap');
 
-$db = $app->make('db');
-$token = $_GET['token'] ?? '';
-$tokens = $db->table('personal_access_tokens')->get();
+$kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
+$kernel->bootstrap();
 
-header('Content-Type: application/json');
-echo json_encode(['tokens' => $tokens, 'count' => count((array)$tokens)]);
+try {
+    $tokens = \Illuminate\Support\Facades\DB::table('personal_access_tokens')->get();
+    header('Content-Type: application/json');
+    echo json_encode(['count' => $tokens->count(), 'tokens' => $tokens]);
+} catch(\Exception $e) {
+    echo json_encode(['error' => $e->getMessage()]);
+}
