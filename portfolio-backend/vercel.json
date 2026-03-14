@@ -12,6 +12,10 @@
       "dest": "/api/migrate.php"
     },
     {
+      "src": "/api/checktoken.php",
+      "dest": "/api/checktoken.php"
+    },
+    {
       "src": "/(.*)",
       "dest": "/api/index.php",
       "headers": {
