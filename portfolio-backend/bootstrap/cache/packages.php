@@ -1,49 +1,41 @@
 <?php return array (
-  'cloudinary-labs/cloudinary-laravel' =>
+  'cloudinary-labs/cloudinary-laravel' => 
   array (
-    'aliases' =>
+    'aliases' => 
     array (
       'Cloudinary' => 'CloudinaryLabs\\CloudinaryLaravel\\Facades\\Cloudinary',
     ),
-    'providers' =>
+    'providers' => 
     array (
       0 => 'CloudinaryLabs\\CloudinaryLaravel\\CloudinaryServiceProvider',
     ),
   ),
-  'laravel/sail' =>
+  'laravel/sanctum' => 
   array (
-    'providers' =>
-    array (
-      0 => 'Laravel\\Sail\\SailServiceProvider',
-    ),
-  ),
-  'laravel/sanctum' =>
-  array (
-    'providers' =>
+    'providers' => 
     array (
       0 => 'Laravel\\Sanctum\\SanctumServiceProvider',
     ),
   ),
-  'laravel/tinker' =>
+  'laravel/tinker' => 
   array (
-    'providers' =>
+    'providers' => 
     array (
       0 => 'Laravel\\Tinker\\TinkerServiceProvider',
     ),
   ),
-  'nesbot/carbon' =>
+  'nesbot/carbon' => 
   array (
-    'providers' =>
+    'providers' => 
     array (
       0 => 'Carbon\\Laravel\\ServiceProvider',
     ),
-
-  'nunomaduro/termwind' =>
+  ),
+  'nunomaduro/termwind' => 
   array (
-    'providers' =>
+    'providers' => 
     array (
       0 => 'Termwind\\Laravel\\TermwindServiceProvider',
     ),
   ),
-
 );
