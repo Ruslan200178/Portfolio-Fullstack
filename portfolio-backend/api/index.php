@@ -10,6 +10,8 @@ $tmpPath = '/tmp/laravel';
 
 putenv('VIEW_COMPILED_PATH=' . $tmpPath . '/storage/framework/views');
 
+
+
 $dirs = [
     $tmpPath . '/storage/logs',
     $tmpPath . '/storage/framework/cache/data',
@@ -27,6 +29,11 @@ foreach ($dirs as $dir) {
 foreach (glob($appPath . '/bootstrap/cache/*.php') as $file) {
     copy($file, $tmpPath . '/bootstrap/cache/' . basename($file));
 }
+
+// Fix storage path for file uploads
+$_ENV['FILESYSTEM_DISK'] = 'local';
+putenv('FILESYSTEM_DISK=local');
+
 
 require $appPath . '/vendor/autoload.php';
 define('LARAVEL_START', microtime(true));
