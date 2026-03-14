@@ -30,17 +30,17 @@ class ProjectController extends Controller
             'featured'    => 'nullable',
         ]);
 
-        $data = [
-            'title'       => $request->title,
-            'description' => $request->description ?: null,
-            'demo_url'    => $this->cleanUrl($request->demo_url),
-            'github_url'  => $this->cleanUrl($request->github_url),
-            'featured'    => filter_var($request->featured, FILTER_VALIDATE_BOOLEAN),
-            'tags'        => $request->filled('tags')
-                                ? array_map('trim', explode(',', $request->tags))
-                                : [],
-        ];
-
+ $data = [
+     'title'             => $request->title,
+     'short_description' => $request->short_description ?? null,
+      'description'       => $request->description ?: null,
+      'demo_url'          => $this->cleanUrl($request->demo_url),
+     'github_url'        => $this->cleanUrl($request->github_url),
+      'featured'          => filter_var($request->featured, FILTER_VALIDATE_BOOLEAN),
+    'tags'              => $request->filled('tags')
+                            ? array_map('trim', explode(',', $request->tags))
+                            : [],
+];
         if ($request->hasFile('image')) {
             $uploaded = Cloudinary::upload($request->file('image')->getRealPath(), [
                 'folder' => 'portfolio/projects',
@@ -71,6 +71,7 @@ class ProjectController extends Controller
         $data = [
             'title'       => $request->title ?? $project->title,
             'description' => $request->has('description') ? ($request->description ?: null) : $project->description,
+            'short_description' => $request->has('short_description') ? $request->short_description : $project->short_description,
             'demo_url'    => $request->has('demo_url') ? $this->cleanUrl($request->demo_url) : $project->demo_url,
             'github_url'  => $request->has('github_url') ? $this->cleanUrl($request->github_url) : $project->github_url,
             'featured'    => $request->has('featured')
