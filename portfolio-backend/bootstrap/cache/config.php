@@ -627,7 +627,7 @@
     ),
     'guard' => 
     array (
-      0 => 'api',
+      0 => 'web',
     ),
     'expiration' => NULL,
     'token_prefix' => '',
