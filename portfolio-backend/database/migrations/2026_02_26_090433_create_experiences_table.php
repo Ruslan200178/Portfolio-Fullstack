@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('location')->nullable();
             $table->date('start_date');
             $table->date('end_date')->nullable();   // null = present
-            $table->boolean('is_current')->default(false);
+            $table->smallInteger('is_current')->default(0);
             $table->longText('description');
             $table->string('company_logo')->nullable();
             $table->integer('sort_order')->default(0);
