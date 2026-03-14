@@ -10,23 +10,12 @@ class UserSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('users')->upsert([
-            [
-                'name'       => 'Admin',
-                'email'      => 'admin@portfolio.com',
-                'password'   => Hash::make('password123'),
-                'is_admin'   => true,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name'       => 'Test User',
-                'email'      => 'test@portfolio.com',
-                'password'   => Hash::make('password123'),
-                'is_admin'   => false,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ], ['email'], ['name', 'password', 'is_admin', 'updated_at']);
+        DB::statement("
+            INSERT INTO users (name, email, password, is_admin, created_at, updated_at)
+            VALUES 
+            ('Admin', 'admin@portfolio.com', '" . Hash::make('password123') . "', TRUE, NOW(), NOW()),
+            ('Test User', 'test@portfolio.com', '" . Hash::make('password123') . "', FALSE, NOW(), NOW())
+            ON CONFLICT (email) DO NOTHING
+        ");
     }
 }
