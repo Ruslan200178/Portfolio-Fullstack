@@ -14,10 +14,9 @@ return [
     */
 
 'defaults' => [
-    'guard' => 'api',
+    'guard' => 'web',
     'passwords' => 'users',
 ],
-
     /*
     |--------------------------------------------------------------------------
     | Authentication Guards
@@ -37,10 +36,6 @@ return [
 'guards' => [
     'web' => [
         'driver' => 'session',
-        'provider' => 'users',
-    ],
-    'api' => [
-        'driver' => 'sanctum',
         'provider' => 'users',
     ],
 ],
