@@ -3,7 +3,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class ProjectController extends Controller
 {
@@ -24,7 +24,7 @@ class ProjectController extends Controller
             'title'       => 'required|string|max:255',
             'description' => 'nullable|string',
             'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:3072',
-            'demo_url'    => 'nullable|string|max:255',   // string not url — frontend may send empty
+            'demo_url'    => 'nullable|string|max:255',
             'github_url'  => 'nullable|string|max:255',
             'tags'        => 'nullable|string',
             'featured'    => 'nullable',
@@ -32,7 +32,7 @@ class ProjectController extends Controller
 
         $data = [
             'title'       => $request->title,
-            'description' => $request->description    ?: null,
+            'description' => $request->description ?: null,
             'demo_url'    => $this->cleanUrl($request->demo_url),
             'github_url'  => $this->cleanUrl($request->github_url),
             'featured'    => filter_var($request->featured, FILTER_VALIDATE_BOOLEAN),
@@ -42,7 +42,10 @@ class ProjectController extends Controller
         ];
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('projects', 'public');
+            $uploaded = Cloudinary::upload($request->file('image')->getRealPath(), [
+                'folder' => 'portfolio/projects',
+            ]);
+            $data['image'] = $uploaded->getSecurePath();
         }
 
         $project = Project::create($data);
@@ -66,10 +69,10 @@ class ProjectController extends Controller
         ]);
 
         $data = [
-            'title'       => $request->title       ?? $project->title,
+            'title'       => $request->title ?? $project->title,
             'description' => $request->has('description') ? ($request->description ?: null) : $project->description,
-            'demo_url'    => $request->has('demo_url')    ? $this->cleanUrl($request->demo_url)    : $project->demo_url,
-            'github_url'  => $request->has('github_url')  ? $this->cleanUrl($request->github_url)  : $project->github_url,
+            'demo_url'    => $request->has('demo_url') ? $this->cleanUrl($request->demo_url) : $project->demo_url,
+            'github_url'  => $request->has('github_url') ? $this->cleanUrl($request->github_url) : $project->github_url,
             'featured'    => $request->has('featured')
                                 ? filter_var($request->featured, FILTER_VALIDATE_BOOLEAN)
                                 : $project->featured,
@@ -79,8 +82,10 @@ class ProjectController extends Controller
         ];
 
         if ($request->hasFile('image')) {
-            if ($project->image) Storage::disk('public')->delete($project->image);
-            $data['image'] = $request->file('image')->store('projects', 'public');
+            $uploaded = Cloudinary::upload($request->file('image')->getRealPath(), [
+                'folder' => 'portfolio/projects',
+            ]);
+            $data['image'] = $uploaded->getSecurePath();
         }
 
         $project->update($data);
@@ -93,18 +98,15 @@ class ProjectController extends Controller
 
     public function destroy(Project $project)
     {
-        if ($project->image) Storage::disk('public')->delete($project->image);
         $project->delete();
         return response()->json(['success' => true, 'message' => 'Project deleted']);
     }
 
-    // Clean URL — return null if empty, add https:// if missing
     private function cleanUrl($value): ?string
     {
         if (empty($value) || $value === 'null') return null;
         $value = trim($value);
         if (!$value) return null;
-        // Add https:// if user forgot it
         if (!preg_match('/^https?:\/\//i', $value)) {
             $value = 'https://' . $value;
         }
