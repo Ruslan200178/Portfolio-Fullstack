@@ -309,7 +309,6 @@
       'pgsql' => 
       array (
         'driver' => 'pgsql',
-        'url' => NULL,
         'host' => 'ep-rapid-wave-aduw4n4n-pooler.c-2.us-east-1.aws.neon.tech',
         'port' => '5432',
         'database' => 'neondb',
@@ -319,7 +318,12 @@
         'prefix' => '',
         'prefix_indexes' => true,
         'search_path' => 'public',
-        'sslmode' => 'prefer',
+        'sslmode' => 'require',
+        'options' => 
+        array (
+          1000 => true,
+          20 => true,
+        ),
       ),
       'sqlsrv' => 
       array (
@@ -378,10 +382,9 @@
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xampp\\htdocs\\portfolio-backend\\storage\\app/public',
+        'root' => '/tmp/laravel/storage/app/public',
         'url' => 'https://portfolio-fullstack-sigma.vercel.app/storage',
         'visibility' => 'public',
-        'throw' => false,
       ),
       's3' => 
       array (
