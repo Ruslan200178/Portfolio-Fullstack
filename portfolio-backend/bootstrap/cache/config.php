@@ -382,7 +382,7 @@
       'public' => 
       array (
         'driver' => 'local',
-        'root' => '/tmp/laravel/storage/app/public',
+        'root' => 'C:\\xampp\\htdocs\\portfolio-backend\\storage\\app/public',
         'url' => 'https://portfolio-fullstack-sigma.vercel.app/storage',
         'visibility' => 'public',
       ),
