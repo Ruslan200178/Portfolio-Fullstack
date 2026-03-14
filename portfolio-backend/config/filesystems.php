@@ -31,16 +31,19 @@ return [
     'disks' => [
 
         'local' => [
-            'driver' => 'local',
-            'root' => storage_path('app'),
-            'throw' => false,
-        ],
+    'driver' => 'local',
+    'root' => '/tmp/laravel/storage/app',
+    'throw' => false,
+],
+
 'public' => [
     'driver' => 'local',
-    'root' => storage_path('app/public'),
+    'root' => '/tmp/laravel/storage/app/public',
     'url' => env('APP_URL').'/storage',
     'visibility' => 'public',
+    'throw' => false,
 ],
+
   's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

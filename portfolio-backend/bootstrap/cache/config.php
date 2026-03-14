@@ -371,15 +371,16 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xampp\\htdocs\\portfolio-backend\\storage\\app',
+        'root' => '/tmp/laravel/storage/app',
         'throw' => false,
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xampp\\htdocs\\portfolio-backend\\storage\\app/public',
+        'root' => '/tmp/laravel/storage/app/public',
         'url' => 'https://portfolio-fullstack-sigma.vercel.app/storage',
         'visibility' => 'public',
+        'throw' => false,
       ),
       's3' => 
       array (
