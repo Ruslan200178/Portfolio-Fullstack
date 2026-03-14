@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('subject');
             $table->longText('message');
-            $table->boolean('is_read')->default(false);
+          $table->smallInteger('is_read')->default(0);
             $table->timestamp('read_at')->nullable();
             $table->timestamps();
         });
