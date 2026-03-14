@@ -4,30 +4,29 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class UserSeeder extends Seeder
 {
     public function run()
     {
-        // Admin User — only create if not exists
-        User::firstOrCreate(
-            ['email' => 'admin@portfolio.com'],
+        DB::table('users')->upsert([
             [
-                'name'     => 'Admin',
-                'password' => Hash::make('password123'),
-                'is_admin' => true,
-            ]
-        );
-
-        // Test User — only create if not exists
-        User::firstOrCreate(
-            ['email' => 'test@portfolio.com'],
+                'name'       => 'Admin',
+                'email'      => 'admin@portfolio.com',
+                'password'   => Hash::make('password123'),
+                'is_admin'   => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
             [
-                'name'     => 'Test User',
-                'password' => Hash::make('password123'),
-                'is_admin' => false,
-            ]
-        );
+                'name'       => 'Test User',
+                'email'      => 'test@portfolio.com',
+                'password'   => Hash::make('password123'),
+                'is_admin'   => false,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ], ['email'], ['name', 'password', 'is_admin', 'updated_at']);
     }
 }
