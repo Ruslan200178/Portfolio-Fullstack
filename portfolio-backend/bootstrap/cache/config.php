@@ -319,11 +319,6 @@
         'prefix_indexes' => true,
         'search_path' => 'public',
         'sslmode' => 'require',
-        'options' => 
-        array (
-          1000 => true,
-          20 => true,
-        ),
       ),
       'sqlsrv' => 
       array (
@@ -623,13 +618,7 @@
   array (
     'stateful' => 
     array (
-      0 => 'localhost',
-      1 => 'localhost:3000',
-      2 => 'localhost:8000',
-      3 => '127.0.0.1',
-      4 => '127.0.0.1:8000',
-      5 => '::1',
-      6 => 'portfolio-fullstack-sigma.vercel.app',
+      0 => 'ruslan-port.netlify.app',
     ),
     'guard' => 
     array (
@@ -680,7 +669,7 @@
     ),
     'cookie' => 'portfolio_session',
     'path' => '/',
-    'domain' => NULL,
+    'domain' => 'vercel.app',
     'secure' => NULL,
     'http_only' => true,
     'same_site' => 'lax',
