@@ -3,7 +3,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\About;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class AboutController extends Controller
 {
@@ -39,17 +39,21 @@ class AboutController extends Controller
             'github_url', 'linkedin_url', 'twitter_url',
         ]);
 
-        // Allow saving empty string to clear a field — only skip null
         $data = array_filter($data, fn($v) => $v !== null);
 
         if ($request->hasFile('profile_image')) {
-            if ($about->profile_image) Storage::disk('public')->delete($about->profile_image);
-            $data['profile_image'] = $request->file('profile_image')->store('about', 'public');
+            $uploaded = Cloudinary::upload($request->file('profile_image')->getRealPath(), [
+                'folder' => 'portfolio/about',
+            ]);
+            $data['profile_image'] = $uploaded->getSecurePath();
         }
 
         if ($request->hasFile('cv_file')) {
-            if ($about->cv_file) Storage::disk('public')->delete($about->cv_file);
-            $data['cv_file'] = $request->file('cv_file')->store('cv', 'public');
+            $uploaded = Cloudinary::uploadFile($request->file('cv_file')->getRealPath(), [
+                'folder' => 'portfolio/cv',
+                'resource_type' => 'raw',
+            ]);
+            $data['cv_file'] = $uploaded->getSecurePath();
         }
 
         $about->update($data);
