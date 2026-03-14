@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('field_of_study');    // e.g Computer Science
             $table->date('start_date');
             $table->date('end_date')->nullable();
-            $table->boolean('is_current')->default(false);
+           $table->smallInteger('is_current')->default(0);
             $table->string('grade')->nullable(); // e.g 3.8 GPA
             $table->text('description')->nullable();
             $table->string('institution_logo')->nullable();
