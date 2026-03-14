@@ -92,7 +92,7 @@
   array (
     'defaults' => 
     array (
-      'guard' => 'web',
+      'guard' => 'api',
       'passwords' => 'users',
     ),
     'guards' => 
@@ -100,6 +100,11 @@
       'web' => 
       array (
         'driver' => 'session',
+        'provider' => 'users',
+      ),
+      'api' => 
+      array (
+        'driver' => 'sanctum',
         'provider' => 'users',
       ),
       'sanctum' => 
@@ -623,7 +628,7 @@
     ),
     'guard' => 
     array (
-      0 => 'web',
+      0 => 'api',
     ),
     'expiration' => NULL,
     'token_prefix' => '',
