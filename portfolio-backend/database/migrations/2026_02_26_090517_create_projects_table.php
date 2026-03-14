@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('github_url')->nullable();
             $table->json('tags');               // ["Laravel","React","MySQL"]
             $table->string('status')->default('completed'); // completed, in-progress
-            $table->boolean('is_featured')->default(false);
+           $table->smallInteger('is_featured')->default(0);
             $table->integer('sort_order')->default(0);
             $table->timestamps();
         });
