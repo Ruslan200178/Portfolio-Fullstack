@@ -40,21 +40,22 @@ const About = () => {
                 {about?.profile_image
                   ? <img src={getImageUrl(about.profile_image)} alt="Profile" className="w-full h-full object-cover" />
                   : <div className="w-full h-full bg-gradient-to-br from-primary-700 to-primary-400 flex items-center justify-center text-white text-4xl font-bold">
-                      {getInitials(about?.title || 'P')}
-                    </div>
+                    {getInitials(about?.title || 'P')}
+                  </div>
                 }
               </div>
               <div className="absolute -bottom-2 -right-2 w-7 h-7 bg-green-400 rounded-full border-2 border-dark-100 flex items-center justify-center">
                 <span className="text-xs">✓</span>
               </div>
             </div>
-            <h2 className="text-xl font-bold text-white mb-1">{about?.title || 'Developer'}</h2>
-            <p className="text-primary-400 text-sm mb-4">{about?.subtitle || 'Full Stack Developer'}</p>
+            <h2 className="text-xl font-bold text-white mb-1">{about?.name || 'Developer'}</h2>
+            <p className="text-primary-400 text-sm">{about?.title || ''}</p>
+            <p className="text-gray-400 text-sm mb-4">{about?.subtitle || 'Full Stack Developer'}</p>
             <div className="flex items-center justify-center gap-3 mb-5">
-              {about?.github_url   && <a href={about.github_url}   target="_blank" rel="noreferrer" className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition-all"><FiGithub   size={17} /></a>}
+              {about?.github_url && <a href={about.github_url} target="_blank" rel="noreferrer" className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition-all"><FiGithub size={17} /></a>}
               {about?.linkedin_url && <a href={about.linkedin_url} target="_blank" rel="noreferrer" className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition-all"><FiLinkedin size={17} /></a>}
-              {about?.twitter_url  && <a href={about.twitter_url}  target="_blank" rel="noreferrer" className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition-all"><FiTwitter  size={17} /></a>}
-              {about?.email    && <a href={`mailto:${about.email}`}        className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition-all"><FiMail     size={17} /></a>}
+              {about?.twitter_url && <a href={about.twitter_url} target="_blank" rel="noreferrer" className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition-all"><FiTwitter size={17} /></a>}
+              {about?.email && <a href={`mailto:${about.email}`} className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition-all"><FiMail size={17} /></a>}
             </div>
             {about?.cv_file && (
               <a href={getImageUrl(about.cv_file)} download target="_blank" rel="noreferrer"
@@ -65,8 +66,8 @@ const About = () => {
           </div>
           <div className="card">
             <h3 className="text-white font-bold mb-2 text-sm uppercase tracking-wider text-primary-400">Personal Info</h3>
-            <InfoItem icon={FiMapPin}   label="Location"  value={about?.location} />
-            <InfoItem icon={FiMail}     label="Email"     value={about?.email}    />
+            <InfoItem icon={FiMapPin} label="Location" value={about?.location} />
+            <InfoItem icon={FiMail} label="Email" value={about?.email} />
             <InfoItem icon={FiCalendar} label="Available" value={about?.available || 'Open to opportunities'} />
           </div>
         </motion.div>
@@ -86,10 +87,10 @@ const About = () => {
             <h3 className="text-lg font-bold text-white mb-4">What I Do</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
-                { icon: '🌐', title: 'Web Development',     desc: 'Building responsive and performant web apps'     },
+                { icon: '🌐', title: 'Web Development', desc: 'Building responsive and performant web apps' },
                 { icon: '⚙️', title: 'Backend Development', desc: 'RESTful APIs, databases and server architecture' },
-                { icon: '🎨', title: 'UI/UX Design',        desc: 'Clean, intuitive user interfaces'                },
-                { icon: '📱', title: 'Mobile Friendly',     desc: 'Responsive designs for all screen sizes'         },
+                { icon: '🎨', title: 'UI/UX Design', desc: 'Clean, intuitive user interfaces' },
+                { icon: '📱', title: 'Mobile Friendly', desc: 'Responsive designs for all screen sizes' },
               ].map((item, i) => (
                 <motion.div key={i} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 + i * 0.08 }}
                   className="flex items-start gap-3 p-4 rounded-xl bg-white/5 border border-white/5 hover:border-primary-500/20 transition-all">
@@ -109,8 +110,8 @@ const About = () => {
               {[
                 { emoji: '☕', label: 'Coffees/day', value: '3+' },
                 { emoji: '💻', label: 'Hours coding', value: '8h' },
-                { emoji: '🐛', label: 'Bugs fixed',   value: '∞'  },
-                { emoji: '🎯', label: 'Focus level',  value: '100%'},
+                { emoji: '🐛', label: 'Bugs fixed', value: '∞' },
+                { emoji: '🎯', label: 'Focus level', value: '100%' },
               ].map((fact, i) => (
                 <motion.div key={i} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.5 + i * 0.08 }}
                   className="p-4 rounded-xl bg-white/5 border border-white/5">
